@@ -6,6 +6,7 @@
  * Exemple : Utils::redirect('home'); 
  */
 class Utils {
+
     /**
      * Convertit une date vers le format de type "Samedi 15 juillet 2023" en francais.
      * @param DateTime $date : la date à convertir.
@@ -13,12 +14,41 @@ class Utils {
      */
     public static function convertDateToFrenchFormat(DateTime $date) : string
     {
-        // Attention, s'il y a un soucis lié à IntlDateFormatter c'est qu'il faut
-        // activer l'extention intl_date_formater (ou intl) au niveau du serveur apache. 
-        // Ca peut se faire depuis php.ini ou parfois directement depuis votre utilitaire (wamp/mamp/xamp)
-        $dateFormatter = new IntlDateFormatter('fr_FR', IntlDateFormatter::FULL, IntlDateFormatter::FULL);
-        $dateFormatter->setPattern('EEEE d MMMM Y');
-        return $dateFormatter->format($date);
+        // Attention, cette version ne nécessite PAS l'extension IntlDateFormatter.
+        // La date est formatée manuellement afin d'éviter les problèmes liés à l'extension intl
+        // qui peut ne pas être activée sur certains environnements (wamp/mamp/xamp).
+
+        $days = [
+            'Sunday'    => 'dimanche',
+            'Monday'    => 'lundi',
+            'Tuesday'   => 'mardi',
+            'Wednesday' => 'mercredi',
+            'Thursday'  => 'jeudi',
+            'Friday'    => 'vendredi',
+            'Saturday'  => 'samedi',
+        ];
+
+        $months = [
+            1  => 'janvier',
+            2  => 'février',
+            3  => 'mars',
+            4  => 'avril',
+            5  => 'mai',
+            6  => 'juin',
+            7  => 'juillet',
+            8  => 'août',
+            9  => 'septembre',
+            10 => 'octobre',
+            11 => 'novembre',
+            12 => 'décembre',
+        ];
+
+        $dayName = $days[$date->format('l')] ?? $date->format('l');
+        $day = (int) $date->format('j');
+        $month = $months[(int) $date->format('n')] ?? $date->format('F');
+        $year = $date->format('Y');
+
+        return $dayName . ' ' . $day . ' ' . $month . ' ' . $year;
     }
 
     /**
