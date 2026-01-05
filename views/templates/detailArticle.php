@@ -7,6 +7,7 @@
 
 <article class="mainArticle">
     <h2> <?= Utils::format($article->getTitle()) ?> </h2>
+    <p><?= $article->getViews() ?> vues</p>
     <span class="quotation">«</span>
     <p><?= Utils::format($article->getContent()) ?></p>
 

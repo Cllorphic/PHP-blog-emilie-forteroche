@@ -9,6 +9,7 @@
     private int $idUser;
     private string $title = "";
     private string $content = "";
+    private int $views = 0;
     private ?DateTime $dateCreation = null;
     private ?DateTime $dateUpdate = null;  
 
@@ -116,6 +117,22 @@
         }
         $this->dateUpdate = $dateUpdate;
     }
+    /**
+ * Setter pour le nombre de vues.
+ */
+public function setViews(int $views): void
+{
+    $this->views = $views;
+}
+
+/**
+ * Getter pour le nombre de vues.
+ */
+public function getViews(): int
+{
+    return $this->views;
+}
+
 
     /**
      * Getter pour la date de mise à jour.
