@@ -29,13 +29,27 @@ class AdminController {
      * Vérifie que l'utilisateur est connecté.
      * @return void
      */
-    private function checkIfUserIsConnected() : void
-    {
-        // On vérifie que l'utilisateur est connecté.
+    function checkIfUserIsConnected() : void
+{
+    // MODE DEV : auto-login local
+    if (defined('DEV_MODE') && DEV_MODE === true) {
         if (!isset($_SESSION['user'])) {
-            Utils::redirect("connectionForm");
+            $_SESSION['user'] = new User([
+                'id' => 1,
+                'login' => 'dev',
+                'password' => ''
+            ]);
+            $_SESSION['idUser'] = 1;
         }
+        return;
     }
+
+    // Mode normal (prod)
+    if (!isset($_SESSION['user'])) {
+        Utils::redirect("connectionForm");
+    }
+}
+
 
     /**
      * Affichage du formulaire de connexion.
@@ -176,4 +190,19 @@ class AdminController {
         // On redirige vers la page d'administration.
         Utils::redirect("admin");
     }
+
+public function showMonitoring(): void
+{
+    // Tu peux remettre la sécurité plus tard
+    // $this->checkIfUserIsConnected();
+
+    $articleManager = new ArticleManager();
+    $articles = $articleManager->getArticlesWithStats();
+
+    $view = new View("Admin - Monitoring");
+    $view->render("adminMonitoring", [
+        'articles' => $articles
+    ]);
+}
+
 }

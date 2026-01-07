@@ -350,3 +350,32 @@ footer {
     color: white;
     background-color: var(--headerColor);
 }
+/* Alternance UNIQUEMENT sur les lignes de données */
+.adminMonitoring .articleLine:not(.head):nth-child(odd) {
+    background-color: rgba(255, 255, 255, 0.12);
+}
+/* Structure des lignes */
+.adminMonitoring .articleLine {
+    display: flex;
+    align-items: center;
+}
+
+/* Colonne titre */
+.adminMonitoring .articleLine .title {
+    flex: 1;
+    padding-right: 15px;
+}
+
+/* Colonnes chiffres */
+.adminMonitoring .articleLine .stat {
+    width: 90px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Colonne date */
+.adminMonitoring .articleLine .date {
+    width: 200px;
+    text-align: right;
+    white-space: nowrap;
+}

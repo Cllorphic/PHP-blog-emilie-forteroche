@@ -99,4 +99,23 @@ class ArticleManager extends AbstractEntityManager
         $sql = "DELETE FROM article WHERE id = :id";
         $this->db->query($sql, ['id' => $id]);
     }
+    public function getArticlesWithStats() : array
+{
+    $sql = "
+        SELECT 
+            a.id,
+            a.title,
+            a.views,
+            a.date_creation,
+            COUNT(c.id) AS comments_count
+        FROM article a
+        LEFT JOIN comment c ON c.id_article = a.id
+        GROUP BY a.id
+        ORDER BY a.date_creation DESC
+    ";
+
+    $result = $this->db->query($sql);
+    return $result->fetchAll(PDO::FETCH_ASSOC);
+}
+
 }
