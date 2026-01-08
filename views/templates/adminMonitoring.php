@@ -1,23 +1,24 @@
 <h2>Monitoring des articles</h2>
 
-<div class="adminArticle adminMonitoring">
-    <!-- Ligne d'en-tête -->
-    <div class="articleLine head">
-        <div class="title">Titre</div>
-        <div class="stat">Vues</div>
-        <div class="stat">Commentaires</div>
-        <div class="date">Date de publication</div>
-    </div>
-
-    <!-- Lignes de données -->
-    <?php foreach ($articles as $article): ?>
-        <div class="articleLine">
-            <div class="title"><?= htmlspecialchars($article['title']) ?></div>
-            <div class="stat"><?= (int)$article['views'] ?></div>
-            <div class="stat"><?= (int)$article['comments_count'] ?></div>
-            <div class="date"><?= htmlspecialchars($article['date_creation']) ?></div>
-        </div>
-    <?php endforeach; ?>
-</div>
+<table class="adminArticle">
+    <thead>
+        <tr>
+            <th class="col-title">Titre</th>
+            <th class="col-stat">Vues</th>
+            <th class="col-stat">Commentaires</th>
+            <th class="col-date">Date de publication</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($articles as $article): ?>
+            <tr>
+                <td class="col-title"><?= htmlspecialchars($article['title']) ?></td>
+                <td class="col-stat"><?= (int)$article['views'] ?></td>
+                <td class="col-stat"><?= (int)$article['comments_count'] ?></td>
+                <td class="col-date"><?= htmlspecialchars($article['date_creation']) ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
 
 <a class="submit" href="index.php?action=admin">Retour admin</a>
