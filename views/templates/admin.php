@@ -6,6 +6,7 @@
 ?>
 
 <h2>Edition des articles</h2>
+<h3><a href="index.php?action=adminMonitoring">Accéder au monitoring</a></h3>
 
 <div class="adminArticle">
     <?php foreach ($articles as $article) { ?>
@@ -19,4 +20,4 @@
 </div>
 
 <a class="submit" href="index.php?action=showUpdateArticleForm">Ajouter un article</a>
-<a class="submit" href="index.php?action=adminMonitoring">Monitoring</a>
+

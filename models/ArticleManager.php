@@ -101,6 +101,19 @@ class ArticleManager extends AbstractEntityManager
     }
     public function getArticlesWithStats() : array
 {
+    // Récupération des paramètres de tri
+    $sort = $_GET['sort'] ?? 'date_creation';
+    $order = $_GET['order'] ?? 'desc';
+    
+    // Sécurité : liste blanche des colonnes autorisées
+    $allowedSort = ['title', 'views', 'comments_count', 'date_creation'];
+    if (!in_array($sort, $allowedSort)) {
+        $sort = 'date_creation';
+    }
+    if ($order !== 'asc' && $order !== 'desc') {
+        $order = 'desc';
+    }
+    
     $sql = "
         SELECT 
             a.id,
@@ -111,7 +124,7 @@ class ArticleManager extends AbstractEntityManager
         FROM article a
         LEFT JOIN comment c ON c.id_article = a.id
         GROUP BY a.id
-        ORDER BY a.date_creation DESC
+        ORDER BY {$sort} {$order}
     ";
 
     $result = $this->db->query($sql);

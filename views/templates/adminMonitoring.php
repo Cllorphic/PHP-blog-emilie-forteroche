@@ -1,12 +1,34 @@
+<?php
+$sort = $_GET['sort'] ?? 'date_creation';
+$order = $_GET['order'] ?? 'desc';
+$newOrder = ($order === 'asc') ? 'desc' : 'asc';
+?>
+
 <h2>Monitoring des articles</h2>
 
 <table class="adminArticle">
     <thead>
         <tr>
-            <th class="col-title">Titre</th>
-            <th class="col-stat">Vues</th>
-            <th class="col-stat">Commentaires</th>
-            <th class="col-date">Date de publication</th>
+            <th class="col-title">
+                <a href="index.php?action=adminMonitoring&sort=title&order=<?= $newOrder ?>">
+                    Titre <?= $sort === 'title' ? ($order === 'asc' ? '↑' : '↓') : '↕' ?>
+                </a>
+            </th>
+            <th class="col-stat">
+                <a href="index.php?action=adminMonitoring&sort=views&order=<?= $newOrder ?>">
+                    Vues <?= $sort === 'views' ? ($order === 'asc' ? '↑' : '↓') : '↕' ?>
+                </a>
+            </th>
+            <th class="col-stat">
+                <a href="index.php?action=adminMonitoring&sort=comments_count&order=<?= $newOrder ?>">
+                    Commentaires <?= $sort === 'comments_count' ? ($order === 'asc' ? '↑' : '↓') : '↕' ?>
+                </a>
+            </th>
+            <th class="col-date">
+                <a href="index.php?action=adminMonitoring&sort=date_creation&order=<?= $newOrder ?>">
+                    Date de publication <?= $sort === 'date_creation' ? ($order === 'asc' ? '↑' : '↓') : '↕' ?>
+                </a>
+            </th>
         </tr>
     </thead>
     <tbody>
