@@ -44,4 +44,63 @@ class CommentController
         // On redirige vers la page de l'article.
         Utils::redirect("showArticle", ['id' => $idArticle]);
     }
+   public function adminComments(): void
+{
+    // Optionnel : même protection que l'admin
+    // (adapte si tu as une méthode spécifique)
+    if (!isset($_SESSION['user'])) {
+        Utils::redirect('connectionForm');
+        return;
+    }
+
+    $articleId = (int) Utils::request('id');
+    $page = max(1, (int) Utils::request('page', 1));
+    $limit = 10;
+    $offset = ($page - 1) * $limit;
+
+    $articleManager = new ArticleManager();
+    $article = $articleManager->getArticleById($articleId);
+
+    if ($article === null) {
+        throw new Exception("Article introuvable.");
+    }
+
+    $commentManager = new CommentManager();
+    $comments = $commentManager->getCommentsByArticleIdPaginated($articleId, $limit, $offset);
+    $total = $commentManager->countCommentsByArticleId($articleId);
+
+    $view = new View("Admin - Commentaires");
+    $view->render("adminComments", [
+        'article' => $article,
+        'comments' => $comments,
+        'page' => $page,
+        'limit' => $limit,
+        'total' => $total
+    ]);
+}
+
+public function deleteAdmin(): void
+{
+    if (!isset($_SESSION['user'])) {
+        Utils::redirect('connectionForm');
+        return;
+    }
+
+    $commentId = (int) Utils::request('comment_id');
+    $articleId = (int) Utils::request('article_id');
+    $page = max(1, (int) Utils::request('page', 1));
+
+    $commentManager = new CommentManager();
+    $comment = $commentManager->getCommentById($commentId);
+
+    if ($comment !== null) {
+        $commentManager->deleteComment($comment); // ✅ méthode qui existe chez toi
+    }
+
+    Utils::redirect('adminComments', [
+        'id' => $articleId,
+        'page' => $page
+    ]);
+}
+
 }

@@ -49,6 +49,17 @@ try {
     $adminController->showMonitoring();
     break;
 
+    case 'adminComments':
+    $commentController = new CommentController();
+    $commentController->adminComments();
+    break;
+
+case 'deleteCommentAdmin':
+    $commentController = new CommentController();
+    $commentController->deleteAdmin();
+    break;
+
+
 
         case 'connectionForm':
             $adminController = new AdminController();

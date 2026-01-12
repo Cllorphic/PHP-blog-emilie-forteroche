@@ -29,6 +29,7 @@ $newOrder = ($order === 'asc') ? 'desc' : 'asc';
                     Date de publication <?= $sort === 'date_creation' ? ($order === 'asc' ? '↑' : '↓') : '↕' ?>
                 </a>
             </th>
+            <th class="col-action">Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -38,6 +39,13 @@ $newOrder = ($order === 'asc') ? 'desc' : 'asc';
                 <td class="col-stat"><?= (int)$article['views'] ?></td>
                 <td class="col-stat"><?= (int)$article['comments_count'] ?></td>
                 <td class="col-date"><?= htmlspecialchars($article['date_creation']) ?></td>
+                <td class="col-action">
+                    <h4>
+                        <a href="index.php?action=adminComments&id=<?= (int)$article['id'] ?>">
+                            Gérer les commentaires
+                        </a>
+                    </h4>
+                </td>
             </tr>
         <?php endforeach; ?>
     </tbody>
