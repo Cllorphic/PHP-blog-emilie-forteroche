@@ -47,7 +47,7 @@ class CommentController
    public function adminComments(): void
 {
     // Optionnel : même protection que l'admin
-    // (adapte si tu as une méthode spécifique)
+    
     if (!isset($_SESSION['user'])) {
         Utils::redirect('connectionForm');
         return;
