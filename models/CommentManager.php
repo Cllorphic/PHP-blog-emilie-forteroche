@@ -65,7 +65,15 @@ class CommentManager extends AbstractEntityManager
         $result = $this->db->query($sql, ['id' => $comment->getId()]);
         return $result->rowCount() > 0;
     }
-  public function countCommentsByArticleId(int $idArticle): int
+
+
+ /**
+ * Compte le nombre total de commentaires liés à un article.
+ *
+ * @param int $idArticle : l'identifiant de l'article concerné.
+ * @return int : le nombre total de commentaires pour cet article.
+ */
+public function countCommentsByArticleId(int $idArticle): int
 {
     $sql = "SELECT COUNT(*) AS total FROM comment WHERE id_article = :idArticle";
     $result = $this->db->query($sql, ['idArticle' => $idArticle]);
@@ -74,13 +82,19 @@ class CommentManager extends AbstractEntityManager
     return (int)($row['total'] ?? 0);
 }
 
+/**
+ * Récupère les commentaires d'un article avec pagination.
+ *
+ * @param int $idArticle : l'identifiant de l'article concerné.
+ * @param int $limit : le nombre maximum de commentaires à récupérer.
+ * @param int $offset : le décalage à partir duquel commencer la récupération.
+ * @return Comment[] : un tableau d'objets Comment correspondant à la page demandée.
+ */
 public function getCommentsByArticleIdPaginated(int $idArticle, int $limit, int $offset): array
 {
     $limit = max(1, (int)$limit);
     $offset = max(0, (int)$offset);
 
-    // ✅ ORDER BY : mets le vrai champ de ta table comment
-    // Si tu n'es pas sûr, mets "id DESC" (ça marche toujours)
     $sql = "SELECT * FROM comment
             WHERE id_article = :idArticle
             ORDER BY id DESC
@@ -92,8 +106,7 @@ public function getCommentsByArticleIdPaginated(int $idArticle, int $limit, int 
     while ($row = $result->fetch()) {
         $comments[] = new Comment($row);
     }
+
     return $comments;
 }
-
-
 }
