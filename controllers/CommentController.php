@@ -94,7 +94,7 @@ public function deleteAdmin(): void
     $comment = $commentManager->getCommentById($commentId);
 
     if ($comment !== null) {
-        $commentManager->deleteComment($comment); // ✅ méthode qui existe chez toi
+        $commentManager->deleteComment($comment); 
     }
 
     Utils::redirect('adminComments', [
